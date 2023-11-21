@@ -58,7 +58,10 @@ public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
 
     @discardableResult
     public func load() -> WKNavigation? {
-        var url = "https://wallet.localhost:3000"
+        
+        var configUrl = self.config?["baseUrl"] as? String
+        
+        var url: String = (configUrl as String?) ?? "https://wallet.vatom.com"
         if businessId != "" {
             url = url + "/b/" + businessId!
         }
