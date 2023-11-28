@@ -4,10 +4,12 @@ import WebKit
 public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
     var businessId: String?
     var accessToken: String?
+    var refreshToken: String?
     var view: UIView?
     let webConfig = WKWebViewConfiguration()
     let contentController = WKUserContentController()
     var config: [String: Any?]?
+    
     
 
     private lazy var vatomMessageHandler: VatomMessageHandler = {
@@ -25,7 +27,7 @@ public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
         return handler
     }()
 
-    public init(businessId: String = "", accessToken: String, view: UIView, config: [String: Any?]?) {
+    public init(businessId: String = "", accessToken: String, view: UIView, config: [String: Any?]?, refreshToken: String) {
         webConfig.userContentController = contentController
         webConfig.preferences.javaScriptCanOpenWindowsAutomatically = true
         webConfig.allowsInlineMediaPlayback = true
@@ -35,6 +37,7 @@ public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
         localStorage.setItem("VATOM_ACCESS_TOKEN","\(accessToken)");
         sessionStorage.setItem('isEmbedded','true');
         sessionStorage.setItem('embeddedType','ios');
+        sessionStorage.setItem("VATOM_BUSINESS_ID", "\(businessId)")
         """
 
         let script = WKUserScript(source: scriptSource, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
@@ -44,6 +47,7 @@ public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
         vatomMessageHandler.handle(name: "vatomwallet:getCurrentPosition", callback: getCurrentPosition)
         self.businessId = businessId
         self.accessToken = accessToken
+        self.refreshToken = refreshToken
         self.view = view
         super.navigationDelegate = self
         super.uiDelegate = self
@@ -62,8 +66,8 @@ public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
         var configUrl = self.config?["baseUrl"] as? String
         
         var url: String = (configUrl as String?) ?? "https://wallet.vatom.com"
-        if businessId != "" {
-            url = url + "/b/" + businessId!
+        if let businessId {
+            url = url + "/b/" + businessId
         }
         if let url = URL(string: url) {
             let req = URLRequest(url: url)
@@ -106,7 +110,8 @@ public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
                     "accessToken": accessToken,
                     "embeddedType": "ios",
                     "businessId": businessId,
-                    "config": self.config
+                    "config": self.config,
+                    "refreshToken": self.refreshToken
                 ])
         } catch {
             print("init sdk error", error)
@@ -196,20 +201,30 @@ public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
     public func getUser() async -> VatomUser? {
         do {
             let user: VatomUser = try await vatomMessageHandler.sendMsg2(name: "walletsdk:getCurrentUser", payload: [])
-            print("AQUI GET USER ", user)
             return user
         } catch {
             print("error getting user")
         }
         return nil
     }
+    
+    
 
     public func listTokens() async -> [Any]? {
         do {
             let tokens: [Any] = try await vatomMessageHandler.sendMsg(name: "walletsdk:listTokens") as! [Any]
             return tokens
         } catch {
-            print("error getting user")
+            print("error getting tokens")
+        }
+        return nil
+    }
+    
+    public func logOut() async -> [Any]? {
+        do {
+             try await vatomMessageHandler.sendMsg(name: "walletsdk:logOut") 
+        } catch {
+            print("error logging out")
         }
         return nil
     }
