@@ -167,42 +167,57 @@ The `navigateToTab` function allows navigation to a specific tab in the applicat
   await wallet.navigateToTab("Connect", ["paramKey": "paramValue"]);
 
 ```
+## navigate()
 
-
-## performAction()
-
-The `performAction` function is intended to be called by the host application to initiate a specific action on a token within the wallet SDK.
+The `navigate` function facilitates navigation within the wallet SDK by sending a message to trigger a specific route.
 
 ### Parameters:
 
-- **`tokenId`** (`String`): The unique identifier of the token on which the action will be performed.
-- **`actionName`** (`String`): The name of the action to be executed on the token.
-- **`payload`** (`Object?`): An optional payload containing additional data required for the specified action. It can be `null` if no additional data is needed.
-
+- **`route` (String)**: The route to navigate to within the wallet SDK.
+- **`params` [String: Any]? (optional)**: Additional parameters to be passed along with the navigation request.
 
 ### Usage:
 
 ```swift
-await wallet.performAction("tokenId123", "activate", ["foo": "bar"]);
+// Example 1: Navigate to a route without additional parameters.
+wallet.navigate("home");
+
+// Example 2: Navigate to a route with additional parameters.
+wallet.navigate("profile", ["any": "..."]);
 ```
 
-## trashToken()
+## openCommunity()
 
-The `trashToken` function is designed to be called by the host application to initiate the removal or deletion of a specific token within the wallet SDK.
+The `openCommunity` function facilitates the opening of a community within the wallet SDK. It sends a message to the wallet SDK to navigate to a specific community, and optionally to a specific room within that community.
 
 ### Parameters:
 
-- **`tokenId`** (`String`): The unique identifier of the token to be trashed or deleted.
+- **`communityId` (String)**: The unique identifier of the community to be opened.
+- **`roomId` (String)?**: The unique identifier of the room within the community to navigate to.
 
 ### Usage:
 
 ```swift
-await wallet.trashToken(tokenId: "id")
+// Example: Open a community without specifying a room.
+await wallet.openCommunity(communityId: "communityId");
+
+// Example: Open a specific room within a community.
+await wallet.openCommunity(communityId: "communityId", roomId: "roomId");
+```
+
+## listTokens()
+
+The `listTokens` function is intended to be called by the host application to retrieve a list of tokens owned by the user within the wallet SDK.
+
+### Usage:
+
+```swift
+var userTokens = await wallet.listTokens();
 ```
 
 ## getToken()
 
-The `getToken` function is intended to be called by the host application to retrieve information about a specific token within the wallet SDK.
+The `getToken` function is intended to be called by the host application to retrieve information about a specific token in the user's wallet inventory.
 
 ### Parameters:
 
@@ -233,7 +248,8 @@ var tokenInfo = await wallet.getToken(tokenId: "id");
 
 ## getPublicToken()
 
-The `getPublicToken` function is designed to be called by the host application to retrieve public information about a specific token within the wallet SDK.
+The `getPublicToken` function is designed to be called by the host application to retrieve information about a public token that is not neccessarily in the user's wallet inventory (e.g. dropped on the map)
+
 
 ### Parameters:
 
@@ -262,14 +278,51 @@ The `getPublicToken` function is designed to be called by the host application t
 var publicTokenInfo = await wallet.getPublicToken('tokenId123');
 ```
 
-## listTokens()
+## openToken()
 
-The `listTokens` function is intended to be called by the host application to retrieve a list of tokens owned by the user within the wallet SDK.
+The `openToken` function facilitates the navigation to the NFT detail screen within the wallet SDK.
+
+### Parameters:
+
+- **`tokenId` (String)**: The unique identifier of the NFT for which the detail screen should be opened.
 
 ### Usage:
 
 ```swift
-var userTokens = await wallet.listTokens();
+// Example: Open the NFT detail screen for a specific token.
+await wallet.openToken("abc123");
+```
+
+## trashToken()
+
+The `trashToken` function is designed to be called by the host application to initiate the removal or deletion of a specific token within the wallet SDK.
+
+### Parameters:
+
+- **`tokenId`** (`String`): The unique identifier of the token to be trashed or deleted.
+
+### Usage:
+
+```swift
+await wallet.trashToken(tokenId: "id")
+```
+
+
+## performAction()
+
+The `performAction` function is intended to be called by the host application to initiate a specific action on a token within the wallet SDK.
+
+### Parameters:
+
+- **`tokenId`** (`String`): The unique identifier of the token on which the action will be performed.
+- **`actionName`** (`String`): The name of the action to be executed on the token.
+- **`payload`** (`Object?`): An optional payload containing additional data required for the specified action. It can be `null` if no additional data is needed.
+
+
+### Usage:
+
+```swift
+await wallet.performAction("tokenId123", "activate", ["foo": "bar"]);
 ```
 
 ## isLoggedIn()
@@ -340,40 +393,6 @@ if (currentUser != null) {
 }
 ```
 
-## navigate()
-
-The `navigate` function facilitates navigation within the wallet SDK by sending a message to trigger a specific route.
-
-### Parameters:
-
-- **`route` (String)**: The route to navigate to within the wallet SDK.
-- **`params` [String: Any]? (optional)**: Additional parameters to be passed along with the navigation request.
-
-### Usage:
-
-```swift
-// Example 1: Navigate to a route without additional parameters.
-wallet.navigate("home");
-
-// Example 2: Navigate to a route with additional parameters.
-wallet.navigate("profile", ["any": "..."]);
-```
-
-## openToken()
-
-The `openToken` function facilitates the navigation to the NFT detail screen within the wallet SDK.
-
-### Parameters:
-
-- **`tokenId` (String)**: The unique identifier of the NFT for which the detail screen should be opened.
-
-### Usage:
-
-```swift
-// Example: Open the NFT detail screen for a specific token.
-await wallet.openToken("abc123");
-```
-
 ## logOut()
 
 The `logOut` function initiates the log-out process in the wallet SDK by sending a message to trigger the log-out action.
@@ -383,22 +402,4 @@ The `logOut` function initiates the log-out process in the wallet SDK by sending
 ```swift
 // Example: Initiate the log-out process.
 await wallet.logOut();
-```
-## openCommunity()
-
-The `openCommunity` function facilitates the opening of a community within the wallet SDK. It sends a message to the wallet SDK to navigate to a specific community, and optionally to a specific room within that community.
-
-### Parameters:
-
-- **`communityId` (String)**: The unique identifier of the community to be opened.
-- **`roomId` (String)?**: The unique identifier of the room within the community to navigate to.
-
-### Usage:
-
-```swift
-// Example: Open a community without specifying a room.
-await wallet.openCommunity(communityId: "communityId");
-
-// Example: Open a specific room within a community.
-await wallet.openCommunity(communityId: "communityId", roomId: "roomId");
 ```
