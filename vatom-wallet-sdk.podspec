@@ -3,7 +3,7 @@ Pod::Spec.new do |spec|
 
 
   spec.name         = "vatom-wallet-sdk"
-  spec.version      = "0.0.7"
+  spec.version      = "0.0.8"
   spec.summary      = "Vatom Wallet SDK for ios."
   spec.description  = <<-DESC
                       Vatom Wallet SDK for ios.
