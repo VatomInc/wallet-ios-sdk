@@ -40,21 +40,6 @@ import vatom_wallet_sdk
 
 class ViewController: UIViewController, UIScrollViewDelegate {
     var wallet: VatomWallet?
-
-        private func loadMapStyles () ->  [VatomConfig.MapStyleElement]? {
-        var mapStyles: [VatomConfig.MapStyleElement]?
-
-         if let mapStylesUrl = Bundle.main.url(forResource: "mapStyle", withExtension: "json") {
-            do {
-                mapStyles = try VatomConfig.loadMapStyles(from: mapStylesUrl)
-            } catch {
-                print("Error loading map styles: \(error)")
-            }
-            
-        }
-        
-        return mapStyles
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,6 +95,22 @@ class ViewController: UIViewController, UIScrollViewDelegate {
         wallet?.load()
 
     }
+
+    private func loadMapStyles () ->  [VatomConfig.MapStyleElement]? {
+        var mapStyles: [VatomConfig.MapStyleElement]?
+
+         if let mapStylesUrl = Bundle.main.url(forResource: "mapStyle", withExtension: "json") {
+            do {
+                mapStyles = try VatomConfig.loadMapStyles(from: mapStylesUrl)
+            } catch {
+                print("Error loading map styles: \(error)")
+            }
+            
+        }
+        
+        return mapStyles
+    }
+}
     
 ```
 
@@ -163,11 +164,8 @@ The `navigateToTab` function allows navigation to a specific tab in the applicat
 ### Example
 
 ```swift
-try {
   await wallet.navigateToTab("Connect", ["paramKey": "paramValue"]);
-} catch (e) {
-  print("Error: $e");
-}
+
 ```
 
 
