@@ -3,7 +3,7 @@ Pod::Spec.new do |spec|
 
 
   spec.name         = "vatom-wallet-sdk"
-  spec.version      = "0.0.5"
+  spec.version      = "0.0.6"
   spec.summary      = "Vatom Wallet SDK for ios."
   spec.description  = <<-DESC
                       Vatom Wallet SDK for ios.
@@ -11,7 +11,7 @@ Pod::Spec.new do |spec|
 
   spec.homepage     = "https://vatom.com"
   spec.license      = "MIT"
-  spec.author             = { "Luis Palacios" => "luis.palacios@vatom.com" }
+  spec.author             = { "Vatom Corp" => "appadmin@vatom.com" }
   spec.platform     = :ios, "13.0"
   spec.source       = { :git => "https://github.com/VatomInc/wallet-ios-sdk.git", :tag => "#{spec.version}" }
   spec.readme       = "https://raw.githubusercontent.com/VatomInc/wallet-ios-sdk/#{spec.version}/README.md"

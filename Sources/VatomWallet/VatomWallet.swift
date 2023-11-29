@@ -8,7 +8,7 @@ public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
     var view: UIView?
     let webConfig = WKWebViewConfiguration()
     let contentController = WKUserContentController()
-    var config: [String: Any?]?
+    var config: VatomConfig?
     
     
 
@@ -27,7 +27,7 @@ public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
         return handler
     }()
 
-    public init(businessId: String = "", accessToken: String, view: UIView, config: [String: Any?]?, refreshToken: String) {
+    public init(businessId: String = "", accessToken: String, view: UIView, config: VatomConfig, refreshToken: String) {
         webConfig.userContentController = contentController
         webConfig.preferences.javaScriptCanOpenWindowsAutomatically = true
         webConfig.allowsInlineMediaPlayback = true
@@ -62,8 +62,8 @@ public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
 
     @discardableResult
     public func load() -> WKNavigation? {
-        
-        var configUrl = self.config?["baseUrl"] as? String
+        print("AQUI SEL", self.config?.hideNavigation)
+        var configUrl = self.config?.baseUrl
         
         var url: String = (configUrl as String?) ?? "https://wallet.vatom.com"
         if let businessId {
@@ -110,7 +110,7 @@ public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
                     "accessToken": accessToken,
                     "embeddedType": "ios",
                     "businessId": businessId,
-                    "config": self.config,
+                    "config": self.config?.toDictionary(),
                     "refreshToken": self.refreshToken
                 ])
         } catch {
@@ -274,4 +274,43 @@ public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
 
         try await vatomMessageHandler.sendMsg(name: "walletsdk:navigateToTab", payload: parameters)
     }
+ 
+    public func openNFTDetail(tokenId: String) async {
+        let route = self.businessId == nil || self.businessId == "" ?  "NFTDetail" : "NFTDetail_Business"
+        do {
+            try await vatomMessageHandler.sendMsg(name: "walletsdk:navigate",payload: [
+                 "route" : route,
+                 "params": [
+                     "business": self.businessId,
+                     tokenId: tokenId
+                 ]
+             ] )
+        } catch {
+            print("openNFTDetail error", error)
+        }
+    }
+    
+    public func openCommunity(communityId: String, roomId: String?) async {
+        do {
+            try await vatomMessageHandler.sendMsg(name: "walletsdk:openCommunity",payload: [
+                "businessId": self.businessId,
+                "communityId": communityId,
+                "roomId": roomId
+             ])
+        } catch {
+            print("openCommunity error", error)
+        }
+    }
+    
+    public func navigate(route: String, params: [String: Any]?) async {
+        do {
+            try await vatomMessageHandler.sendMsg(name: "walletsdk:navigate",payload: [
+                 "route" : route,
+                 "params": params
+             ] )
+        } catch {
+            print("navigate error", error)
+        }
+    }
+    
 }

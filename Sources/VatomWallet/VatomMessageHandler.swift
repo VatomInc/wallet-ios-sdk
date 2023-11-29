@@ -118,7 +118,6 @@ public class VatomMessageHandler: NSObject, WKScriptMessageHandler {
                 if var messageDictionary = try JSONSerialization.jsonObject(with: jsonData) as? [String: Any] {
                     print("Incoming payload", messageDictionary)
                     if let payloadBool = messageDictionary["payload"] as? Bool {
-                        print("Payload is a boolean:", payloadBool) // This should print true or false
                         messageDictionary["payload"] = payloadBool
                         try await self.onMessage(messageDictionary)
 
