@@ -305,7 +305,11 @@ public class VatomMessageHandler: NSObject, WKScriptMessageHandler {
             // Store pending promise
             self.pending[id] = PendingRequest(
                 resolve: { result in
-                    continuation.resume(returning: result as! Data)
+                    if let result = result as? Data {
+                        continuation.resume(returning: result)
+                    } else {
+                        continuation.resume(returning: Data())
+                    }
                 }, reject: { _ in
                     print("MessageError.errorFromMessage(error.localizedDescription)")
                 }

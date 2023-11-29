@@ -275,7 +275,7 @@ public class VatomWallet: WKWebView, WKNavigationDelegate, WKUIDelegate {
         try await vatomMessageHandler.sendMsg(name: "walletsdk:navigateToTab", payload: parameters)
     }
  
-    public func openNFTDetail(tokenId: String) async {
+    public func openToken(tokenId: String) async {
         let route = self.businessId == nil || self.businessId == "" ?  "NFTDetail" : "NFTDetail_Business"
         do {
             try await vatomMessageHandler.sendMsg(name: "walletsdk:navigate",payload: [

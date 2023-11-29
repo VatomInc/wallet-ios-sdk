@@ -46,11 +46,13 @@ public struct VatomConfig: Codable {
     public var mapStyle: [MapStyleElement]?
     public var baseUrl: String?
     public var hideDrawer: Bool
+    public var language: String?
 
 
-    public init( baseUrl: String? = nil, hideNavigation: Bool = false,hideDrawer: Bool = false,  hideTokenActions: Bool = false, disableNewTokenToast: Bool, scanner: ScannerConfig, pageConfig: PageConfig, mapStyle: [MapStyleElement]? = nil) {
+    public init( baseUrl: String? = nil, hideNavigation: Bool = false,hideDrawer: Bool = false,  hideTokenActions: Bool = false, language: String? = "en", disableNewTokenToast: Bool, scanner: ScannerConfig, pageConfig: PageConfig, mapStyle: [MapStyleElement]? = nil) {
         self.hideNavigation = hideNavigation
         self.hideDrawer = hideDrawer
+        self.language = language
         self.hideTokenActions = hideTokenActions
         self.disableNewTokenToast = disableNewTokenToast
         self.scanner = scanner

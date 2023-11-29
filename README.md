@@ -40,7 +40,21 @@ import vatom_wallet_sdk
 
 class ViewController: UIViewController, UIScrollViewDelegate {
     var wallet: VatomWallet?
-    let floatingButton = UIButton()
+
+        private func loadMapStyles () ->  [VatomConfig.MapStyleElement]? {
+        var mapStyles: [VatomConfig.MapStyleElement]?
+
+         if let mapStylesUrl = Bundle.main.url(forResource: "mapStyle", withExtension: "json") {
+            do {
+                mapStyles = try VatomConfig.loadMapStyles(from: mapStylesUrl)
+            } catch {
+                print("Error loading map styles: \(error)")
+            }
+            
+        }
+        
+        return mapStyles
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,29 +113,7 @@ class ViewController: UIViewController, UIScrollViewDelegate {
     
 ```
 
-### VatomWalletConfig Properties
 
-- `scannerEnabled`: Boolean value to enable or disable the scanner feature.
-- `hideDrawer`: Boolean value to hide the button for opening the drawer with the businesses
-- `hideNavigation`: Boolean value to hide bottom tab nav.
-- `tokenActionsHidden`: Boolean value to show or hide token actions.
-- `newTokenToastDisabled`: Boolean value to enable or disable new token toast notifications.
-
-## SDK Functions
-
-- `navigateToTab(tabName:parameters:)`: Navigate to a specific tab within the app.
-- `getCurrentUser()`: Retrieve the current user's information.
-- `performAction(tokenId:actionName:payload:)`: Perform a specific action on a token.
-- `trashToken(tokenId:)`: Remove or delete a token.
-- `getToken(tokenId:)`: Retrieve information about a specific token.
-- `getPublicToken(tokenId:)`: Retrieve public information about a token.
-- `listTokens()`: Get a list of tokens owned by the user.
-- `isLoggedIn()`: Check if the user is logged in.
-- `logOut()`: Initiate the log-out process.
-- `openCommunity(communityId:roomId:)`: Open a community or a specific room within a community.
-- `openNFTDetail(tokenId:)`: Open the NFT detail screen for a specific token.
-
----
 
 
 
@@ -369,9 +361,9 @@ wallet.navigate("home");
 wallet.navigate("profile", ["any": "..."]);
 ```
 
-## openNFTDetail()
+## openToken()
 
-The `openNFTDetail` function facilitates the navigation to the NFT detail screen within the wallet SDK.
+The `openToken` function facilitates the navigation to the NFT detail screen within the wallet SDK.
 
 ### Parameters:
 
@@ -381,7 +373,7 @@ The `openNFTDetail` function facilitates the navigation to the NFT detail screen
 
 ```swift
 // Example: Open the NFT detail screen for a specific token.
-await wallet.openNFTDetail("abc123");
+await wallet.openToken("abc123");
 ```
 
 ## logOut()
@@ -394,7 +386,6 @@ The `logOut` function initiates the log-out process in the wallet SDK by sending
 // Example: Initiate the log-out process.
 await wallet.logOut();
 ```
-
 ## openCommunity()
 
 The `openCommunity` function facilitates the opening of a community within the wallet SDK. It sends a message to the wallet SDK to navigate to a specific community, and optionally to a specific room within that community.
