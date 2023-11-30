@@ -15,9 +15,7 @@ apiauthtype: ""
 user_required: false
 ---
 
-# Vatom™ Swift SDK
-
-Welcome to the Vatom™ Swift SDK, a robust tool designed for seamless integration of the Vatom™ Wallet into iOS applications. This SDK enables swift and efficient digital asset management in your Swift applications, enhancing the user experience with comprehensive wallet functionalities.
+The iOS version of Wallet SDK allows you to embed a Vatom Wallet within your own iOS app.
 
 ## Installation
 
