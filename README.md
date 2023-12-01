@@ -4,7 +4,7 @@ platform: "wallet-sdk"
 group: "ios-wallet-sdk"
 path: "/ios/about"
 title: 'About iOS Wallet SDK'
-order: 30100
+order: 30200
 date: "2023-11-06"
 version: 2
 tags: ["vAtom", "publisher"]
@@ -17,9 +17,24 @@ user_required: false
 
 The iOS version of Wallet SDK allows you to embed a Vatom Wallet within your own iOS app.
 
-## Installation
+## Add The Vatom™ Wallet iOS SDK to Your Project
 
-Add the Vatom™ Wallet SDK to your iOS project using CocoaPods:
+### Reference The SDK From a CocoaPods Podfile
+
+If your project does not yet have a Podfile associated with it, use a text editor to
+create a file called "Podfile" in the same directory that contains your XCode project.
+Copy the following to this file using the name of your project in place of "MyProject".
+
+<example language="jsx" tryIt="false" copyToClipboard="true" heading="Podfile">
+platform :ios, '13.0'
+workspace 'MyProject'
+target 'MyProject' do
+    pod "vatom-wallet-sdk"
+end
+</example>
+
+
+
 
 ```bash
 pod install vatom-wallet-sdk
