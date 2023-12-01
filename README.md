@@ -17,7 +17,7 @@ user_required: false
 
 The iOS version of Wallet SDK allows you to embed a Vatom Wallet within your own iOS app.
 
-## Add The Vatomâ„¢ Wallet iOS SDK to Your Project
+## Add The Vatomª Wallet iOS SDK to Your Project
 
 ### Reference The SDK From a CocoaPods Podfile
 
@@ -25,13 +25,13 @@ If your project does not yet have a Podfile associated with it, use a text edito
 create a file called "Podfile" in the same directory that contains your XCode project.
 Copy the following to this file using the name of your project in place of "MyProject".
 
-<example language="jsx" tryIt="false" copyToClipboard="true" heading="Podfile">
+```
 platform :ios, '13.0'
 workspace 'MyProject'
 target 'MyProject' do
     pod "vatom-wallet-sdk"
 end
-</example>
+```
 
 
 
@@ -60,7 +60,7 @@ Update your `Info.plist` file with the following entries to ensure proper functi
 
 ## Usage
 
-Swift integration of the Vatomâ„¢ Wallet SDK is straightforward. Initialize the wallet and utilize its features in your iOS application.
+Swift integration of the Vatomª Wallet SDK is straightforward. Initialize the wallet and utilize its features in your iOS application.
 
 ### Example
 
