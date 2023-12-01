@@ -19,6 +19,17 @@ The iOS version of Wallet SDK allows you to embed a Vatom Wallet within your own
 
 ## Add The Vatomª Wallet iOS SDK to Your Project
 
+The Vatomª Wallet iOS SDK is publicly hosted at
+[cocoapods.org/pods/vatom-wallet-sdk](https://cocoapods.org/pods/vatom-wallet-sdk).
+The following steps will make it available to your project.
+
+### Make Sure Cocoapods Is Installed
+
+Cocoapods is a package manager that helps you to add public libraries to your XCode
+projects. If it is not yet installed in your development environment, follow the
+instructions at
+[Getting Started With Cocoapods](https://guides.cocoapods.org/using/getting-started.html).
+
 ### Reference The SDK From a CocoaPods Podfile
 
 If your project does not yet have a Podfile associated with it, use a text editor to
@@ -33,12 +44,32 @@ target 'MyProject' do
 end
 ```
 
+If your project has already been using a Podfile, simply add the following target to it
 
+```
+target 'MyProject' do
+    pod "vatom-wallet-sdk"
+end
+```
 
+### Run The Pod Install Command
+
+Open a terminal prompt at the directory containing your Podfile and XCode project.
+Run the following command to activate the updated Podfile.
 
 ```bash
-pod install vatom-wallet-sdk
+pod install
 ```
+
+This will add multiple files and directories as peers to your Podfile.
+Among them, you will find a new workspace if you did not already have one.
+
+### Open Your Project Via Workspace
+
+From this point on, you will have to open your project in XCode via the workspace name
+mentioned in the Podfile instead of the project name ending in ".xcodeproj".
+A workspace is a collection of multiple related project files including the 
+SDK, your original project file, and any other libraries you have added.
 
 ## iOS Permissions and Configuration
 
