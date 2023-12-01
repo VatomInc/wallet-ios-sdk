@@ -17,9 +17,9 @@ user_required: false
 
 The iOS version of Wallet SDK allows you to embed a Vatom Wallet within your own iOS app.
 
-## Add The Vatomª Wallet iOS SDK to Your Project
+## Add The Vatom Wallet iOS SDK to Your Project
 
-The Vatomª Wallet iOS SDK is publicly hosted at
+The Vatom Wallet iOS SDK is publicly hosted at
 [cocoapods.org/pods/vatom-wallet-sdk](https://cocoapods.org/pods/vatom-wallet-sdk).
 The following steps will make it available to your project.
 
